@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,6 +32,7 @@ export function SettingsDialog() {
       <DialogContent className="glass-panel">
         <DialogHeader>
           <DialogTitle>API Settings</DialogTitle>
+          <DialogDescription>Tokens are stored locally in your browser and used client-side.</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">

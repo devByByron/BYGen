@@ -14,6 +14,8 @@ export default function ImagePage() {
 
   const onGenerate = async () => {
     if (!prompt.trim()) return toast.error("Please enter a prompt");
+    const rwKey = localStorage.getItem("bygen-runware-key") || "";
+    if (!rwKey) return toast.error("Missing Runware API key. Open Settings to add it.");
     setLoading(true);
     try {
       const runware = new RunwareService();
