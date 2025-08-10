@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { hfTextGenerate } from "@/services/hf";
+import { groqChatGenerate } from "@/services/groq";
 import Navbar from "@/components/Navbar";
 
 export default function TextPage() {
@@ -14,9 +14,11 @@ export default function TextPage() {
 
   const onGenerate = async () => {
     if (!prompt.trim()) return toast.error("Please enter a prompt");
+    const groqKey = localStorage.getItem("bygen-groq-key") || "";
+    if (!groqKey) return toast.error("Missing Groq API key. Open Settings to add it.");
     setLoading(true);
     try {
-      const generated = await hfTextGenerate(prompt.trim());
+      const generated = await groqChatGenerate(prompt.trim());
       setOutput(generated);
       toast.success("Generated text ready");
     } catch (e: any) {
@@ -25,7 +27,6 @@ export default function TextPage() {
       setLoading(false);
     }
   };
-
   const onCopy = async () => {
     await navigator.clipboard.writeText(output);
     toast.success("Copied to clipboard");

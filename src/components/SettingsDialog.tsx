@@ -9,15 +9,18 @@ import { Settings } from "lucide-react";
 export function SettingsDialog() {
   const [hfToken, setHfToken] = useState("");
   const [runwareKey, setRunwareKey] = useState("");
+  const [groqKey, setGroqKey] = useState("");
 
   useEffect(() => {
     setHfToken(localStorage.getItem("bygen-hf-token") || "");
     setRunwareKey(localStorage.getItem("bygen-runware-key") || "");
+    setGroqKey(localStorage.getItem("bygen-groq-key") || "");
   }, []);
 
   const save = () => {
     localStorage.setItem("bygen-hf-token", hfToken.trim());
     localStorage.setItem("bygen-runware-key", runwareKey.trim());
+    localStorage.setItem("bygen-groq-key", groqKey.trim());
     toast.success("API keys saved locally");
   };
 
@@ -45,7 +48,20 @@ export function SettingsDialog() {
               onChange={(e) => setHfToken(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Used for GPT-2 (text) and StarCoder (code) via Inference API.
+              Optional legacy: used by older local/API fallbacks.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="groq">Groq API Key</Label>
+            <Input
+              id="groq"
+              type="password"
+              placeholder="gsk_..."
+              value={groqKey}
+              onChange={(e) => setGroqKey(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">
+              Primary for text/code generation (Llama 3.1 on Groq).
             </p>
           </div>
           <div className="space-y-2">
@@ -58,7 +74,7 @@ export function SettingsDialog() {
               onChange={(e) => setRunwareKey(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Used for Stable Diffusion image generation (websocket).
+              Used for image generation (Runware API).
             </p>
           </div>
           <div className="pt-2">

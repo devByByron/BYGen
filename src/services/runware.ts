@@ -171,3 +171,6 @@ export class RunwareService {
     });
   }
 }
+
+export const runwareClient = new RunwareService();
+

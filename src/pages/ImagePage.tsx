@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { RunwareService } from "@/services/runware";
+import { runwareClient } from "@/services/runware";
 import Navbar from "@/components/Navbar";
 
 export default function ImagePage() {
@@ -18,8 +18,7 @@ export default function ImagePage() {
     if (!rwKey) return toast.error("Missing Runware API key. Open Settings to add it.");
     setLoading(true);
     try {
-      const runware = new RunwareService();
-      const res = await runware.generateImage({ positivePrompt: prompt.trim(), width: 1024, height: 1024, outputFormat: "WEBP" });
+      const res = await runwareClient.generateImage({ positivePrompt: prompt.trim(), width: 768, height: 768, outputFormat: "WEBP" });
       setImageUrl(res.imageURL);
       toast.success("Image generated");
     } catch (e: any) {

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { hfCodeGenerate } from "@/services/hf";
+import { groqCodeGenerate } from "@/services/groq";
 import Navbar from "@/components/Navbar";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -20,9 +20,11 @@ export default function CodePage() {
 
   const onGenerate = async () => {
     if (!prompt.trim()) return toast.error("Please enter a prompt");
+    const groqKey = localStorage.getItem("bygen-groq-key") || "";
+    if (!groqKey) return toast.error("Missing Groq API key. Open Settings to add it.");
     setLoading(true);
     try {
-      const generated = await hfCodeGenerate(prompt.trim(), language);
+      const generated = await groqCodeGenerate(prompt.trim(), language);
       setOutput(generated);
       toast.success("Code generated");
     } catch (e: any) {
@@ -31,7 +33,6 @@ export default function CodePage() {
       setLoading(false);
     }
   };
-
   const onCopy = async () => {
     await navigator.clipboard.writeText(output);
     toast.success("Copied to clipboard");
