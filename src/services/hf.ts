@@ -1,8 +1,18 @@
 export async function hfTextGenerate(prompt: string): Promise<string> {
   // Local-first: run small GPT-2 in the browser via @huggingface/transformers
   try {
-    const { pipeline } = await import("@huggingface/transformers");
-    const generator: any = await pipeline("text-generation", "onnx-community/gpt2");
+    const { pipeline, env } = await import("@huggingface/transformers");
+    const token = localStorage.getItem("bygen-hf-token") || "";
+    if (token) {
+      // Provide token so model files can be fetched if required
+      // @ts-ignore - env is runtime config object exposed by transformers
+      env.HF_TOKEN = token;
+    }
+    const generator: any = await pipeline(
+      "text-generation",
+      "Xenova/distilgpt2",
+      { device: (navigator as any).gpu ? "webgpu" : "wasm" }
+    );
     const out = await generator(prompt, { max_new_tokens: 120, do_sample: true });
     const text = out?.[0]?.generated_text ?? "";
     if (text) return text;
@@ -14,7 +24,7 @@ export async function hfTextGenerate(prompt: string): Promise<string> {
   // Remote fallback: Hugging Face Inference API (only if token provided)
   const token = localStorage.getItem("bygen-hf-token") || "";
   if (token) {
-    const models = ["openai-community/gpt2", "gpt2"]; // fallback if org route 404s
+    const models = ["distilgpt2", "gpt2"]; // prefer small free model
     let lastError: any = null;
 
     for (const model of models) {
@@ -64,7 +74,7 @@ export async function hfCodeGenerate(prompt: string, language: string): Promise<
   const token = localStorage.getItem("bygen-hf-token") || "";
   if (!token) throw new Error("Missing Hugging Face token. Open Settings to add it.");
 
-  const model = "bigcode/starcoder";
+  const model = "Salesforce/codegen-350M-multi";
 
   const res = await fetch(
     `https://api-inference.huggingface.co/models/${model}`,
