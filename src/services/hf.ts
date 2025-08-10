@@ -1,3 +1,4 @@
+let _textGen: any | null = null;
 export async function hfTextGenerate(prompt: string): Promise<string> {
   // Local-first: run small GPT-2 in the browser via @huggingface/transformers
   try {
@@ -8,12 +9,15 @@ export async function hfTextGenerate(prompt: string): Promise<string> {
       // @ts-ignore - env is runtime config object exposed by transformers
       env.HF_TOKEN = token;
     }
-    const generator: any = await pipeline(
-      "text-generation",
-      "Xenova/distilgpt2",
-      { device: (navigator as any).gpu ? "webgpu" : "wasm" }
-    );
-    const out = await generator(prompt, { max_new_tokens: 120, do_sample: true });
+    if (!_textGen) {
+      _textGen = await pipeline(
+        "text-generation",
+        "Xenova/distilgpt2",
+        { device: (navigator as any).gpu ? "webgpu" : "wasm" }
+      );
+    }
+    const generator: any = _textGen;
+    const out = await generator(prompt, { max_new_tokens: 320, temperature: 0.7, top_p: 0.9, do_sample: true });
     const text = out?.[0]?.generated_text ?? "";
     if (text) return text;
   } catch (localError) {
@@ -24,7 +28,12 @@ export async function hfTextGenerate(prompt: string): Promise<string> {
   // Remote fallback: Hugging Face Inference API (only if token provided)
   const token = localStorage.getItem("bygen-hf-token") || "";
   if (token) {
-    const models = ["distilgpt2", "gpt2"]; // prefer small free model
+    const models = [
+      "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "Qwen/Qwen2.5-1.5B-Instruct",
+      "distilgpt2",
+      "gpt2"
+    ]; // prefer small free instruct models first
     let lastError: any = null;
 
     for (const model of models) {
@@ -38,8 +47,8 @@ export async function hfTextGenerate(prompt: string): Promise<string> {
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-              inputs: prompt,
-              parameters: { max_new_tokens: 120 },
+              inputs: `Instruction: ${prompt}\nAnswer:`,
+              parameters: { max_new_tokens: 320, temperature: 0.7, top_p: 0.9 },
               options: { wait_for_model: true },
             }),
           }
