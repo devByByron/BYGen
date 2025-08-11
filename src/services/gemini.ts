@@ -29,7 +29,11 @@ export function geminiText(prompt: string) {
 }
 
 // For code generation (same endpoint, just adjust prompt)
-export function geminiCode(prompt: string) {
-    return geminiGenerate(`Write code for: ${prompt}`, "gemini-1.5-flash");
+export function geminiCode(prompt: string, language: string) {
+    return geminiGenerate(
+        `Write ONLY ${language} code for the following request. Do not include other languages. Request: ${prompt}`,
+        "gemini-1.5-flash"
+    );
 }
+
 
