@@ -39,7 +39,7 @@ export async function hfTextGenerate(prompt: string): Promise<string> {
 	}
 
 	// DeepSeek Coder V2 Lite Instruct model
-	const model = "gpt2";
+	const model = "Qwen/Qwen2.5-14B-Instruct";
 
 	const res = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
 		method: "POST",
