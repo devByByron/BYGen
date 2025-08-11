@@ -4,7 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { groqChatGenerate } from "@/services/groq";
+// import { groqChatGenerate } from "@/services/groq";
+import { hfTextGenerate } from "@/services/hf";
 import Navbar from "@/components/Navbar";
 
 export default function TextPage() {
@@ -16,7 +17,7 @@ export default function TextPage() {
 		if (!prompt.trim()) return toast.error("Please enter a prompt");
 		setLoading(true);
 		try {
-			const generated = await groqChatGenerate(prompt.trim());
+			const generated = await hfTextGenerate(prompt.trim());
 			setOutput(generated);
 			toast.success("Generated text ready");
 		} catch (e: any) {
