@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 // import { groqChatGenerate } from "@/services/groq";
-import { hfTextGenerate } from "@/services/hf";
+// import { hfTextGenerate } from "@/services/hf";
+import { geminiText } from "@/services/gemini";
 import Navbar from "@/components/Navbar";
 
 export default function TextPage() {
@@ -17,7 +18,7 @@ export default function TextPage() {
 		if (!prompt.trim()) return toast.error("Please enter a prompt");
 		setLoading(true);
 		try {
-			const generated = await hfTextGenerate(prompt.trim());
+			const generated = await geminiText(prompt.trim());
 			setOutput(generated);
 			toast.success("Generated text ready");
 		} catch (e: any) {
