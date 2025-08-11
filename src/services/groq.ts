@@ -1,13 +1,6 @@
 // groq.ts
 
-// Prefer key from localStorage to avoid build-time envs; fall back to Vite env if present
 function getGroqApiKey(): string | null {
-  try {
-    const k = localStorage.getItem("bygen-groq-key");
-    if (k && k.trim()) return k.trim();
-  } catch {
-    // localStorage may be unavailable in some contexts
-  }
   const v = (import.meta as any)?.env?.VITE_GROQ_API_KEY as string | undefined;
   return v && String(v).trim() ? String(v).trim() : null;
 }
@@ -19,9 +12,7 @@ export async function groqChatGenerate(prompt: string): Promise<string> {
 	try {
 		const key = getGroqApiKey();
 		if (!key) {
-			throw new Error(
-				"Missing Groq API key. Open Settings and add your Groq key (stored locally), or define VITE_GROQ_API_KEY."
-			);
+			throw new Error("Missing Groq API key. Define VITE_GROQ_API_KEY.");
 		}
 
 		const res = await fetch(
@@ -74,9 +65,7 @@ export async function groqCodeGenerate(
 	try {
 		const key = getGroqApiKey();
 		if (!key) {
-			throw new Error(
-				"Missing Groq API key. Open Settings and add your Groq key (stored locally), or define VITE_GROQ_API_KEY."
-			);
+			throw new Error("Missing Groq API key. Define VITE_GROQ_API_KEY.");
 		}
 
 		const res = await fetch(
