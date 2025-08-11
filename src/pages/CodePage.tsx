@@ -11,7 +11,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { groqCodeGenerate } from "@/services/groq";
+// import { groqCodeGenerate } from "@/services/groq";
 import { hfCodeGenerate } from "@/services/hf"
 import Navbar from "@/components/Navbar";
 import SyntaxHighlighter from "react-syntax-highlighter";
