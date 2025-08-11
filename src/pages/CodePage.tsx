@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 // import { groqCodeGenerate } from "@/services/groq";
-import { hfCodeGenerate } from "@/services/hf"
+// import { hfCodeGenerate } from "@/services/hf"
+import { geminiCode } from "@/services/gemini"
 import Navbar from "@/components/Navbar";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -38,7 +39,7 @@ export default function CodePage() {
 		if (!prompt.trim()) return toast.error("Please enter a prompt");
 		setLoading(true);
 		try {
-			const generated = await hfCodeGenerate(prompt.trim(), language);
+			const generated = await geminiCode(prompt.trim(), language);
 			setOutput(generated);
 			toast.success("Code generated");
 		} catch (e: any) {
