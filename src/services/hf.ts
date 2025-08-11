@@ -85,8 +85,8 @@ export async function hfCodeGenerate(prompt: string): Promise<string> {
 	}
 
 	// Code generation model
-	// Recommended: Starcoder2 or CodeLlama for free HF inference
-	const model = "bigcode/starcoder2-15b"; // Can change to codellama/CodeLlama-13b-Instruct-hf if preferred
+	
+	const model = "bigcode/starcoder2-15b-instruct"; 
 
 	const res = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
 		method: "POST",
