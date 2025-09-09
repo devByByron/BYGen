@@ -1,73 +1,77 @@
-# Welcome to your Lovable project
+# 🚀 Custom Content Generator
 
-## Project info
+A versatile tool that allows users to generate **text, code, and images** from simple prompts.  
+Built with **Gemini 1.5 Flash** for text & code generation and **Hugging Face Stable Diffusion** for image generation.  
 
-**URL**: https://lovable.dev/projects/75f68e43-456b-4128-b5ba-25fe8acd23e7
+---
 
-## How can I edit this code?
+## 🌐 Project Info
 
-There are several ways of editing your application.
+- **Live Demo**: [bygen.netlify.app](https://bygen.netlify.app/)  
+- **GitHub Repository**: [github.com/devByByron/BYGen](https://github.com/devByByron/BYGen)  
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/75f68e43-456b-4128-b5ba-25fe8acd23e7) and start prompting.
+## 🛠️ Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+Follow these steps to run the project locally:
 
-**Use your preferred IDE**
+```bash
+# 1. Clone the repository
+git clone https://github.com/devByByron/BYGen.git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# 2. Navigate to the project directory
+cd BYGen
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 3. Install dependencies
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## ⚡ Technologies Used
 
-**Use GitHub Codespaces**
+- **React**  
+- **TypeScript**  
+- **Vite**  
+- **Tailwind CSS**  
+- **shadcn-ui**  
+- **Gemini 1.5 Flash API** → Text & Code Generation  
+- **Hugging Face Stable Diffusion** → Text-to-Image Generation  
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 🚀 Deployment
 
-This project is built with:
+The project is deployed with **Netlify**.  
+To deploy your own version:  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Connect your repository to Netlify (or another hosting service).  
+2. Configure the build command as:  
 
-## How can I deploy this project?
+   ```bash
+   npm run build
+   ```  
 
-Simply open [Lovable](https://lovable.dev/projects/75f68e43-456b-4128-b5ba-25fe8acd23e7) and click on Share -> Publish.
+3. Set the output directory to:  
 
-## Can I connect a custom domain to my Lovable project?
+   ```bash
+   dist
+   ```  
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📜 License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is open-source and available under the **MIT License**.  
+
+---
+
+## 👨‍💻 Author
+
+**Byron Young**  
+- GitHub: [@devByByron](https://github.com/devByByron)  
+- Portfolio: [bygen.netlify.app](https://bygen.netlify.app/)  
