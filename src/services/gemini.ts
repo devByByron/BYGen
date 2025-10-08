@@ -1,8 +1,8 @@
-export async function geminiGenerate(prompt: string, model: string = "gemini-1.5-flash"): Promise<string> {
+export async function geminiGenerate(prompt: string, model: string = "gemini-2.5-flash"): Promise<string> {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) throw new Error("Missing Gemini API key");
 
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -25,14 +25,14 @@ export async function geminiGenerate(prompt: string, model: string = "gemini-1.5
 
 // For text generation
 export function geminiText(prompt: string) {
-    return geminiGenerate(prompt, "gemini-1.5-flash");
+    return geminiGenerate(prompt, "gemini-2.5-flash");
 }
 
 // For code generation (same endpoint, just adjust prompt)
 export function geminiCode(prompt: string, language: string) {
     return geminiGenerate(
         `Write ONLY ${language} code for the following request. Do not include other languages. Request: ${prompt}`,
-        "gemini-1.5-flash"
+        "gemini-2.5-flash"
     );
 }
 
